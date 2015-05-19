@@ -11,8 +11,7 @@ public class Cs50FinanceApplication {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(Cs50FinanceApplication.class, args);
-
-
+        
         // for debugging. On start up, Log to the console a list of all the beans that Spring has created behind the scenes
         System.out.println("Let's inspect the beans provided by Spring Boot:");
         String[] beanNames = ctx.getBeanDefinitionNames();
