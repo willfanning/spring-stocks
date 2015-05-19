@@ -10,6 +10,11 @@ import java.util.Date;
 /**
  * Created by Chris Bay on 5/17/15.
  */
+
+
+/**
+ * Represents the record of an event in which a user bought or sold some number of shares of a particular stock.
+ */
 @Entity
 @Table(name = "transactions")
 public class StockTransaction extends AbstractEntity {

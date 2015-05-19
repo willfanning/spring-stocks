@@ -14,6 +14,10 @@ import java.util.Map;
 /**
  * Created by cbay on 5/10/15.
  */
+
+/**
+ * Represents a user's ownership stake in a particular stock
+ */
 @Entity
 @Table(name = "stock_holdings")
 public class StockHolding extends AbstractEntity {
@@ -22,7 +26,12 @@ public class StockHolding extends AbstractEntity {
     private int sharesOwned;
     private int ownerId;
 
+    /**
+     * The history of past transactions in which this user bought or sold shares from this stock holding
+     */
     private List<StockTransaction> transactions;
+
+
 
     private StockHolding() {}
 
@@ -114,6 +123,8 @@ public class StockHolding extends AbstractEntity {
     }
 
     /**
+     * Static method for buying shares of a StockHolding. Creates a new holding if the user did not already have one,
+     * otherwise simply updates sharesOwned on the existing holding
      *
      * @param user              user to buy the stock
      * @param symbol            symbol of the stock to buy
@@ -143,6 +154,7 @@ public class StockHolding extends AbstractEntity {
     }
 
     /**
+     * Static method for selling shares of a StockHolding.
      *
      * @param user              owner of the holding
      * @param symbol            symbol of the holding to sell

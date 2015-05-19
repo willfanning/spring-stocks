@@ -12,12 +12,15 @@ import java.nio.charset.Charset;
 /**
  * Created by Chris Bay on 5/15/15.
  */
+
+/**
+ * Represents the stock for a particular company. Encapsulates the stock symbol, company name, and current price.
+ */
 public class Stock {
 
     private final String symbol;
     private final float price;
     private final String name;
-    private static final String urlBase = "http://download.finance.yahoo.com/d/quotes.csv?f=snl1&s=";
 
     private Stock(String symbol, String name, float price) {
         this.symbol = symbol;
@@ -42,6 +45,9 @@ public class Stock {
         return getName() + " (" + getSymbol() + ")";
     }
 
+
+    private static final String urlBase = "http://download.finance.yahoo.com/d/quotes.csv?f=snl1&s=";
+
     /**
      * Factory to create new Stock instances with current price information.
      *
@@ -50,11 +56,8 @@ public class Stock {
      */
     public static Stock lookupStock(String symbol) throws StockLookupException {
 
-        CSVRecord stockInfo;
-        CSVParser parser;
+        // Assemble the URL to query from Yahoo Finance
         URL url;
-
-        // Fetch the CSV data
         try {
             url = new URL(urlBase + symbol);
         } catch (MalformedURLException e) {
@@ -62,10 +65,13 @@ public class Stock {
             throw new StockLookupException("Problem resolving URL", symbol);
         }
 
+        // Fetch the CSV data
+        CSVParser parser;
+        CSVRecord stockInfo;
         try {
             parser = CSVParser.parse(url, Charset.forName("UTF-8"), CSVFormat.DEFAULT);
 
-            // We expect a single record
+            // We expect a single record, so get the first one
             stockInfo = parser.getRecords().get(0);
             parser.close();
         } catch (IOException e) {
@@ -73,6 +79,7 @@ public class Stock {
             throw new StockLookupException("Problem parsing fetched data", symbol);
         }
 
+        // stockInfo should be a collection like { "YHOO", "Yahoo, Inc.", 123.45 }
         return new Stock(stockInfo.get(0), stockInfo.get(1), Float.parseFloat(stockInfo.get(2)));
     }
 

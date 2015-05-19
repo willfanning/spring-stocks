@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by cbay on 5/15/15.
  */
+
+
+/**
+ * Controller class for handling user login, logout and registration
+ */
 @Controller
 public class AuthenticationController extends AbstractFinanceController {
 
@@ -28,17 +33,20 @@ public class AuthenticationController extends AbstractFinanceController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(String userName, String password, String confirmPassword, Model model) {
 
+        // Perform some validation
         User existingUser = userDao.findByUserName(userName);
-
-        if (!password.equals(confirmPassword)) {
-            return this.displayError("Passwords do not match. Try again.", model);
-        } else if (existingUser != null) {
+        if (existingUser != null) {
             return this.displayError(
                     "The username " + userName + " already exits in the system. Please select a different username", model);
         }
+        else if (!password.equals(confirmPassword)) {
+            return this.displayError("Passwords do not match. Try again.", model);
+        }
 
+        // Validation passed. Create and persist a new User entity
         User newUser = new User(userName, password);
         userDao.save(newUser);
+
         return "index";
     }
 

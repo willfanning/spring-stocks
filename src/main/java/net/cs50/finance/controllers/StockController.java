@@ -20,6 +20,8 @@ public class StockController extends AbstractFinanceController {
 
     @RequestMapping(value = "/quote", method = RequestMethod.GET)
     public String quoteForm(Model model) {
+
+        // pass data to template
         model.addAttribute("title", "Quote");
         model.addAttribute("quoteNavClass", "active");
         return "quote_form";
@@ -30,6 +32,7 @@ public class StockController extends AbstractFinanceController {
 
         // TODO - Implement quote lookup
 
+        // pass data to template
         model.addAttribute("title", "Quote");
         model.addAttribute("quoteNavClass", "active");
 
@@ -38,6 +41,7 @@ public class StockController extends AbstractFinanceController {
 
     @RequestMapping(value = "/buy", method = RequestMethod.GET)
     public String buyForm(Model model) {
+
         model.addAttribute("title", "Buy");
         model.addAttribute("action", "/buy");
         model.addAttribute("buyNavClass", "active");

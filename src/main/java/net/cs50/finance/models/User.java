@@ -12,22 +12,31 @@ import java.util.Map;
  * Created by cbay on 5/10/15.
  */
 
+/**
+ * Represents a user on our site
+ */
 @Entity
 @Table(name = "users")
 public class User extends AbstractEntity {
 
     private String userName;
     private String hash;
-    private Map<String, StockHolding> portfolio;
-    // TODO - add cash to user class
 
-    public User() {}
+    /**
+     * A collection of all the StockHoldings this user owns. The keys are stock symbols, ie "YHOO"
+     */
+    private Map<String, StockHolding> portfolio;
+
+    // TODO - add cash to user class
 
     public User(String userName, String password) {
         this.hash = PasswordHash.getHash(password);
         this.userName = userName;
         this.portfolio = new HashMap<String, StockHolding>();
     }
+
+    // empty constructor so Spring can do its magic
+    public User() {}
 
     @NotNull
     @Column(name = "username", unique = true, nullable = false)
