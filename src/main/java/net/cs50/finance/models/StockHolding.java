@@ -35,10 +35,10 @@ public class StockHolding extends AbstractEntity {
 
     private StockHolding() {}
 
-    private StockHolding(String symbol, int sharesOwned, int ownerId) {
+    private StockHolding(String symbol, int ownerId) {
         // TODO - make sure symbol is always upper or lowercase (your choice)
-        this.symbol = symbol;
-        this.sharesOwned = sharesOwned;
+        this.symbol = symbol.toUpperCase();
+        this.sharesOwned = 0;
         this.ownerId = ownerId;
         transactions = new ArrayList<StockTransaction>();
     }
@@ -142,7 +142,7 @@ public class StockHolding extends AbstractEntity {
 
         // Create new holding, if user has never owned the stock before
         if (!userPortfolio.containsKey(symbol)) {
-            holding = new StockHolding(symbol, numberOfShares, user.getUid());
+            holding = new StockHolding(symbol, user.getUid());
             user.addHolding(holding);
         }
 
