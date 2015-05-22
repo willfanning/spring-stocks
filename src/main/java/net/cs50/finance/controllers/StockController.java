@@ -71,7 +71,9 @@ public class StockController extends AbstractFinanceController {
 
         // conduct buy
         try {
-            StockHolding.buyShares(user, symbol, numberOfShares);
+            StockHolding holding = StockHolding.buyShares(user, symbol, numberOfShares);
+            this.stockHoldingDao.save(holding);
+            this.userDao.save(user);
         } catch (StockLookupException e) {
             this.displayError("Unable to buy", model);
             e.printStackTrace();

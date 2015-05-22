@@ -28,16 +28,9 @@ public class StockHolding extends AbstractEntity {
     private int ownerId;
 
     /**
-     * The history of past transactions in which this user bought or sold shares from this stock holding
+     * The history of past transactions in which the owner bought or sold shares from this stock holding
      */
     private List<StockTransaction> transactions;
-
-
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private StockHoldingDao stockHoldingDao;
 
     private StockHolding() {}
 
@@ -103,15 +96,9 @@ public class StockHolding extends AbstractEntity {
 
         setSharesOwned(sharesOwned + numberOfShares);
 
-        // TODO - update user cash on buy
-        User user = this.userDao.findByUid(this.getUid());
-        Stock stock = Stock.lookupStock(symbol);
-        user.setCash(user.getCash() - stock.getPrice() * numberOfShares);
-
         StockTransaction transaction = new StockTransaction(this, numberOfShares, StockTransaction.TransactionType.BUY);
         this.transactions.add(transaction);
 
-        this.userDao.save(user);
         //this.stockHoldingDao.save(this);
     }
 
@@ -129,7 +116,6 @@ public class StockHolding extends AbstractEntity {
         }
 
         setSharesOwned(sharesOwned - numberOfShares);
-        // TODO - update user cash on sale
 
         StockTransaction transaction = new StockTransaction(this, numberOfShares, StockTransaction.TransactionType.SELL);
         this.transactions.add(transaction);
@@ -168,6 +154,9 @@ public class StockHolding extends AbstractEntity {
         // Conduct buy
         holding = userPortfolio.get(symbol);
         holding.buyShares(numberOfShares);
+
+        // TODO - update user cash on buy
+        user.setCash(user.getCash() - stock.getPrice() * numberOfShares);
 
         return holding;
     }
