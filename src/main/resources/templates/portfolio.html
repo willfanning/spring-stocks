@@ -13,6 +13,18 @@
         <!-- TODO - Display portfolio -->
         <p>Portfolio!</p>
 
+        <table>
+            <th>Symbol</th>
+            <th>Shares</th>
+            <tr th:each="holding : ${holdings}">
+                <td th:text="${holding.symbol}"></td>
+                <td th:text="${holding.sharesOwned}"></td>
+            </tr>
+            <tr>
+                <td th:text="${cash}"></td>
+            </tr>
+        </table>
+
     </div>
 
     <div th:replace="template :: footer"></div>
