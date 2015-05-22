@@ -2,6 +2,7 @@ package net.cs50.finance.models;
 
 import net.cs50.finance.models.dao.StockHoldingDao;
 import net.cs50.finance.models.dao.StockTransactionDao;
+import net.cs50.finance.models.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
@@ -32,6 +33,11 @@ public class StockHolding extends AbstractEntity {
     private List<StockTransaction> transactions;
 
 
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private StockHoldingDao stockHoldingDao;
 
     private StockHolding() {}
 
@@ -96,10 +102,17 @@ public class StockHolding extends AbstractEntity {
         }
 
         setSharesOwned(sharesOwned + numberOfShares);
+
         // TODO - update user cash on buy
+        User user = this.userDao.findByUid(this.getUid());
+        Stock stock = Stock.lookupStock(symbol);
+        user.setCash(user.getCash() - stock.getPrice() * numberOfShares);
 
         StockTransaction transaction = new StockTransaction(this, numberOfShares, StockTransaction.TransactionType.BUY);
         this.transactions.add(transaction);
+
+        this.userDao.save(user);
+        //this.stockHoldingDao.save(this);
     }
 
     /**
@@ -135,6 +148,12 @@ public class StockHolding extends AbstractEntity {
     public static StockHolding buyShares(User user, String symbol, int numberOfShares) throws StockLookupException {
 
         // TODO - make sure symbol matches case convention
+
+        // make sure user can afford to buy this many shares
+        Stock stock = Stock.lookupStock(symbol);
+        if (user.getCash() < stock.getPrice() * numberOfShares) {
+            return null;
+        }
 
         // Get existing holding
         Map<String, StockHolding> userPortfolio = user.getPortfolio();

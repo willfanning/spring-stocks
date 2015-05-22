@@ -1,7 +1,9 @@
 package net.cs50.finance.controllers;
 
 import net.cs50.finance.models.Stock;
+import net.cs50.finance.models.StockHolding;
 import net.cs50.finance.models.StockLookupException;
+import net.cs50.finance.models.User;
 import net.cs50.finance.models.dao.StockHoldingDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,6 +66,18 @@ public class StockController extends AbstractFinanceController {
 
         // TODO - Implement buy action
 
+        // get user
+        User user = this.getUserFromSession(request);
+
+        // conduct buy
+        try {
+            StockHolding.buyShares(user, symbol, numberOfShares);
+        } catch (StockLookupException e) {
+            this.displayError("Unable to buy", model);
+            e.printStackTrace();
+        }
+
+        model.addAttribute("confirmMessage", "You bought some stock");
         model.addAttribute("title", "Buy");
         model.addAttribute("action", "/buy");
         model.addAttribute("buyNavClass", "active");
