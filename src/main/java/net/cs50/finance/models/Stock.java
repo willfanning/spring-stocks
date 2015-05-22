@@ -56,6 +56,8 @@ public class Stock {
      */
     public static Stock lookupStock(String symbol) throws StockLookupException {
 
+        symbol = symbol.toUpperCase();
+
         // Assemble the URL to query from Yahoo Finance
         URL url;
         try {

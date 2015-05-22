@@ -27,12 +27,16 @@ public class User extends AbstractEntity {
      */
     private Map<String, StockHolding> portfolio;
 
+    private float cash;
+    static float startingCash = 10000;
+
     // TODO - add cash to user class
 
     public User(String userName, String password) {
         this.hash = PasswordHash.getHash(password);
         this.userName = userName;
         this.portfolio = new HashMap<String, StockHolding>();
+        this.cash = User.startingCash;
     }
 
     // empty constructor so Spring can do its magic
@@ -66,6 +70,16 @@ public class User extends AbstractEntity {
 
     private void setPortfolio(Map<String, StockHolding> portfolio) {
         this.portfolio = portfolio;
+    }
+
+    @NotNull
+    @Column(name = "cash")
+    public float getCash() {
+        return cash;
+    }
+
+    public void setCash(float cash) {
+        this.cash = cash;
     }
 
     void addHolding (StockHolding holding) throws IllegalArgumentException {

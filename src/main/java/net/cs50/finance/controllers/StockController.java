@@ -1,5 +1,7 @@
 package net.cs50.finance.controllers;
 
+import net.cs50.finance.models.Stock;
+import net.cs50.finance.models.StockLookupException;
 import net.cs50.finance.models.dao.StockHoldingDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,8 +33,17 @@ public class StockController extends AbstractFinanceController {
     public String quote(String symbol, Model model) {
 
         // TODO - Implement quote lookup
+        Stock stock = null;
+        try {
+            stock = Stock.lookupStock(symbol);
+        } catch (StockLookupException e) {
+            this.displayError("Unable to look up stock", model);
+            e.printStackTrace();
+        }
 
         // pass data to template
+        model.addAttribute("stock_desc", stock.getSymbol());
+        model.addAttribute("stock_price", stock.getPrice());
         model.addAttribute("title", "Quote");
         model.addAttribute("quoteNavClass", "active");
 
