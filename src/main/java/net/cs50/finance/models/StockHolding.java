@@ -133,8 +133,6 @@ public class StockHolding extends AbstractEntity {
      */
     public static StockHolding buyShares(User user, String symbol, int numberOfShares) throws StockLookupException {
 
-        // TODO - make sure symbol matches case convention
-
         // make sure user can afford to buy this many shares
         Stock stock = Stock.lookupStock(symbol);
         if (user.getCash() < stock.getPrice() * numberOfShares) {
@@ -155,7 +153,7 @@ public class StockHolding extends AbstractEntity {
         holding = userPortfolio.get(symbol);
         holding.buyShares(numberOfShares);
 
-        // TODO - update user cash on buy
+        // update user cash
         user.setCash(user.getCash() - stock.getPrice() * numberOfShares);
 
         return holding;
@@ -170,9 +168,7 @@ public class StockHolding extends AbstractEntity {
      * @return                  the given holding for symbol and user, or null if user has never owned any of symbol's stock
      * @throws IllegalArgumentException
      */
-    public static StockHolding sellShares(User user, String symbol, int numberOfShares) throws StockLookupException {
-
-        // TODO - make sure symbol matches case convention
+    public static StockHolding sellShares(User user, String symbol, int numberOfShares) throws StockLookupException, IllegalArgumentException {
 
         // Get existing holding
         Map<String, StockHolding> userPortfolio = user.getPortfolio();
@@ -184,7 +180,11 @@ public class StockHolding extends AbstractEntity {
 
         // Conduct sale
         holding = userPortfolio.get(symbol);
+
         holding.sellShares(numberOfShares);
+
+        Stock currentStock = Stock.lookupStock(symbol);
+        user.setCash(user.getCash() + currentStock.getPrice() * numberOfShares);
 
         return holding;
     }

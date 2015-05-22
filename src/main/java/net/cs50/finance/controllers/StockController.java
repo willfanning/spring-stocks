@@ -75,8 +75,8 @@ public class StockController extends AbstractFinanceController {
             this.stockHoldingDao.save(holding);
             this.userDao.save(user);
         } catch (StockLookupException e) {
-            this.displayError("Unable to buy", model);
             e.printStackTrace();
+            return this.displayError("Unable to buy", model);
         }
 
         model.addAttribute("confirmMessage", "You bought some stock");
@@ -98,8 +98,21 @@ public class StockController extends AbstractFinanceController {
     @RequestMapping(value = "/sell", method = RequestMethod.POST)
     public String sell(String symbol, int numberOfShares, HttpServletRequest request, Model model) {
 
-        // TODO - Implement sell action
+        // attempt to sell shars of the stock selected by the user
+        User user = this.getUserFromSession(request);
+        try {
+            StockHolding holding = StockHolding.sellShares(user, symbol, numberOfShares);
+            this.stockHoldingDao.save(holding);
+            this.userDao.save(user);
+        } catch (StockLookupException e) {
+            e.printStackTrace();
+            return this.displayError("Unable to sell", model);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return this.displayError("Can't sell " + numberOfShares + " shares of " + symbol + " because you don't own that many shares.", model);
+        }
 
+        model.addAttribute("confirmMessage", "You sold some stock");
         model.addAttribute("title", "Sell");
         model.addAttribute("action", "/sell");
         model.addAttribute("sellNavClass", "active");
