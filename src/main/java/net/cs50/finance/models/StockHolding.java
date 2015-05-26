@@ -96,7 +96,6 @@ public class StockHolding extends AbstractEntity {
         }
 
         setSharesOwned(sharesOwned + numberOfShares);
-        // TODO - update user cash on buy
 
         StockTransaction transaction = new StockTransaction(this, numberOfShares, StockTransaction.TransactionType.BUY);
         this.transactions.add(transaction);
@@ -149,6 +148,8 @@ public class StockHolding extends AbstractEntity {
         // Conduct buy
         holding = userPortfolio.get(symbol);
         holding.buyShares(numberOfShares);
+        
+       // TODO - update user cash on buy
 
         return holding;
     }
