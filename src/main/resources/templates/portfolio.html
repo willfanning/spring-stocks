@@ -10,18 +10,13 @@
 
     <div id="middle">
 
-        <!-- TODO - Display portfolio -->
-        <p>Portfolio!</p>
-
-        <table>
+        <table class="table table-striped">
             <th>Symbol</th>
             <th>Shares</th>
-            <tr th:each="holding : ${holdings}">
-                <td th:text="${holding.symbol}"></td>
-                <td th:text="${holding.sharesOwned}"></td>
-            </tr>
-            <tr>
-                <td th:text="${cash}"></td>
+            <th>Price</th>
+            <th>Total Value</th>
+            <tr th:each="holdingData : ${portfolioData}">
+                <td th:each="entry : ${holdingData.entrySet()}" th:text="${entry.value}"></td>
             </tr>
         </table>
 
