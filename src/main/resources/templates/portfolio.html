@@ -10,13 +10,22 @@
 
     <div id="middle">
 
+        <h2>Your Stock Holdings</h2>
+
+        <p>Cash remaining: <b th:text="${cash}"></b></p>
+
         <table class="table table-striped">
-            <th>Symbol</th>
-            <th>Shares</th>
-            <th>Price</th>
-            <th>Total Value</th>
+            <tr>
+                <th>Company</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>Total Value</th>
+            </tr>
             <tr th:each="holdingData : ${portfolioData}">
-                <td th:each="entry : ${holdingData.entrySet()}" th:text="${entry.value}"></td>
+                <td th:text="${holdingData.description}"></td>
+                <td th:text="${holdingData.shares}"></td>
+                <td th:text="${holdingData.price}"></td>
+                <td th:text="${holdingData.total_value}"></td>
             </tr>
         </table>
 

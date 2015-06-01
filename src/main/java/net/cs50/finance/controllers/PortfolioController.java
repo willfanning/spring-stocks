@@ -37,8 +37,7 @@ public class PortfolioController extends AbstractFinanceController {
 
             HashMap<String, String> holdingData = new HashMap<String, String>();
 
-            // add symbol and shares to the holding data
-            holdingData.put("symbol", holding.getSymbol());
+            // add shares to the holding data
             holdingData.put("shares", String.valueOf(holding.getSharesOwned()));
 
             // lookup current stock info
@@ -49,6 +48,9 @@ public class PortfolioController extends AbstractFinanceController {
                 e.printStackTrace();
                 return this.displayError("Unable to display portfolio", model);
             }
+
+            // add description to the holding data
+            holdingData.put("description", currentStock.toString());
 
             // add price to the holding data
             String priceDisplay = "$" + String.format("%.2f", currentStock.getPrice());
@@ -63,7 +65,7 @@ public class PortfolioController extends AbstractFinanceController {
         }
 
         model.addAttribute("portfolioData", portfolioData);
-        model.addAttribute("cash", user.getCash());
+        model.addAttribute("cash", "$" + String.format("%.2f", user.getCash()));
         model.addAttribute("title", "Portfolio");
         model.addAttribute("portfolioNavClass", "active");
 
