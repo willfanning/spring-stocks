@@ -31,13 +31,15 @@ public class StockController extends AbstractFinanceController {
     @RequestMapping(value = "/quote", method = RequestMethod.POST)
     public String quote(String symbol, Model model) {
 
-        // TODO - Implement quote lookup
+        // Implement quote lookup
+
+        // attempt to get the current stock instance
         Stock stock = null;
         try {
             stock = Stock.lookupStock(symbol);
         } catch (StockLookupException e) {
-            this.displayError("Unable to look up stock", model);
             e.printStackTrace();
+            return this.displayError("Something went wrong. Make sure you provide a valid company symbol", model);
         }
 
         // pass data to template
@@ -61,26 +63,29 @@ public class StockController extends AbstractFinanceController {
     @RequestMapping(value = "/buy", method = RequestMethod.POST)
     public String buy(String symbol, int numberOfShares, HttpServletRequest request, Model model) {
 
-        // TODO - Implement buy action
+        // Implement buy action
 
         // get user
         User user = this.getUserFromSession(request);
 
-        // conduct buy
+        // attempt to conduct buy
         StockHolding holding = null;
         try {
             holding = StockHolding.buyShares(user, symbol, numberOfShares);
-            this.stockHoldingDao.save(holding);
-            this.userDao.save(user);
         } catch (StockLookupException e) {
             e.printStackTrace();
-            return this.displayError("Unable to buy. Maybe you gave an invalid   stock symbol", model);
+            return this.displayError("Something went wrong. Make sure you provide a valid company symbol", model);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return this.displayError("You don't have enough cash to buy " + numberOfShares + " shares of " + symbol, model);
         }
 
-        model.addAttribute("confirmMessage", "You bought " + numberOfShares+ " shares of " + symbol);
+        // persist changes
+        this.stockHoldingDao.save(holding);
+        this.userDao.save(user);
+
+        // pass data to template
+        model.addAttribute("confirmMessage", "You bought " + numberOfShares + " shares of " + symbol);
         model.addAttribute("title", "Buy");
         model.addAttribute("action", "/buy");
         model.addAttribute("buyNavClass", "active");
@@ -102,11 +107,10 @@ public class StockController extends AbstractFinanceController {
         // attempt to sell shares of the stock selected by the user
         User user = this.getUserFromSession(request);
 
+        // attempt to conduct sale
         StockHolding holding = null;
         try {
             holding = StockHolding.sellShares(user, symbol, numberOfShares);
-            this.stockHoldingDao.save(holding);
-            this.userDao.save(user);
         } catch (StockLookupException e) {
             e.printStackTrace();
             return this.displayError("Unable to sell", model);
@@ -115,6 +119,11 @@ public class StockController extends AbstractFinanceController {
             return this.displayError("Can't sell " + numberOfShares + " shares of " + symbol + " because you don't own that many shares.", model);
         }
 
+        // persist changes
+        this.stockHoldingDao.save(holding);
+        this.userDao.save(user);
+
+        // pass data to template
         model.addAttribute("confirmMessage", "You sold " + numberOfShares + " shares of " + symbol);
         model.addAttribute("title", "Sell");
         model.addAttribute("action", "/sell");
