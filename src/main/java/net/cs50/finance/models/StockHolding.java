@@ -99,7 +99,6 @@ public class StockHolding extends AbstractEntity {
         StockTransaction transaction = new StockTransaction(this, numberOfShares, StockTransaction.TransactionType.BUY);
         this.transactions.add(transaction);
 
-        //this.stockHoldingDao.save(this);
     }
 
     /**
@@ -141,18 +140,17 @@ public class StockHolding extends AbstractEntity {
             throw new IllegalArgumentException("User does not have enough cash to buy this much stock");
         }
 
-        // Get existing holding
+        // Get portfolio
         Map<String, StockHolding> userPortfolio = user.getPortfolio();
-        StockHolding holding;
 
         // Create new holding, if user has never owned the stock before
         if (!userPortfolio.containsKey(symbol)) {
-            holding = new StockHolding(symbol, user.getUid());
-            user.addHolding(holding);
+            StockHolding newHolding = new StockHolding(symbol, user.getUid());
+            user.addHolding(newHolding);
         }
 
         // Conduct buy
-        holding = userPortfolio.get(symbol);
+        StockHolding holding = userPortfolio.get(symbol);
         holding.buyShares(numberOfShares);
 
         // update user cash
@@ -176,17 +174,17 @@ public class StockHolding extends AbstractEntity {
 
         // Get existing holding
         Map<String, StockHolding> userPortfolio = user.getPortfolio();
-        StockHolding holding;
 
+        // make sure usr actually owns stock in this company
         if (!userPortfolio.containsKey(symbol)) {
             throw new IllegalArgumentException("You don't own any shares of this stock");
         }
 
         // Conduct sale
-        holding = userPortfolio.get(symbol);
-
+        StockHolding holding = userPortfolio.get(symbol);
         holding.sellShares(numberOfShares);
 
+        // update user cash
         Stock currentStock = Stock.lookupStock(symbol);
         user.setCash(user.getCash() + currentStock.getPrice() * numberOfShares);
 

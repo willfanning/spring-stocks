@@ -63,7 +63,7 @@ public class StockController extends AbstractFinanceController {
     @RequestMapping(value = "/buy", method = RequestMethod.POST)
     public String buy(String symbol, int numberOfShares, HttpServletRequest request, Model model) {
 
-        // Implement buy action
+        // attempt to buy shares of the stock the user selected
 
         // get user
         User user = this.getUserFromSession(request);
@@ -105,6 +105,8 @@ public class StockController extends AbstractFinanceController {
     public String sell(String symbol, int numberOfShares, HttpServletRequest request, Model model) {
 
         // attempt to sell shares of the stock selected by the user
+
+        // get user
         User user = this.getUserFromSession(request);
 
         // attempt to conduct sale
@@ -113,10 +115,10 @@ public class StockController extends AbstractFinanceController {
             holding = StockHolding.sellShares(user, symbol, numberOfShares);
         } catch (StockLookupException e) {
             e.printStackTrace();
-            return this.displayError("Unable to sell", model);
+            return this.displayError("Something went wrong. Make sure you provide a valid company symbol", model);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return this.displayError("Can't sell " + numberOfShares + " shares of " + symbol + " because you don't own that many shares.", model);
+            return this.displayError("You can't sell " + numberOfShares + " shares of " + symbol + " because you don't own that many shares.", model);
         }
 
         // persist changes

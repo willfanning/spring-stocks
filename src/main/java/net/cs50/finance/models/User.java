@@ -30,9 +30,6 @@ public class User extends AbstractEntity {
     static float startingCash = 10000;
     private float cash = User.startingCash;
 
-
-    // TODO - add cash to user class
-
     public User(String userName, String password) {
         this.hash = PasswordHash.getHash(password);
         this.userName = userName;
