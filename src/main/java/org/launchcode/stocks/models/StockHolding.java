@@ -1,7 +1,7 @@
-package net.cs50.finance.models;
+package org.launchcode.stocks.models;
 
-import net.cs50.finance.models.dao.StockHoldingDao;
-import net.cs50.finance.models.dao.StockTransactionDao;
+import org.launchcode.stocks.models.dao.StockHoldingDao;
+import org.launchcode.stocks.models.dao.StockTransactionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 

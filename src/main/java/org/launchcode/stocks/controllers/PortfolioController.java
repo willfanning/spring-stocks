@@ -1,4 +1,4 @@
-package net.cs50.finance.controllers;
+package org.launchcode.stocks.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Chris Bay on 5/17/15.
  */
 @Controller
-public class PortfolioController extends AbstractFinanceController {
+public class PortfolioController extends AbstractController {
 
     @RequestMapping(value = "/portfolio")
     public String portfolio(HttpServletRequest request, Model model){

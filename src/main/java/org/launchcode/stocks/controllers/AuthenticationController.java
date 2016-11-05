@@ -1,7 +1,7 @@
-package net.cs50.finance.controllers;
+package org.launchcode.stocks.controllers;
 
-import net.cs50.finance.models.User;
-import net.cs50.finance.models.util.PasswordHash;
+import org.launchcode.stocks.models.User;
+import org.launchcode.stocks.models.util.PasswordHash;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * Controller class for handling user login, logout and registration
  */
 @Controller
-public class AuthenticationController extends AbstractFinanceController {
+public class AuthenticationController extends AbstractController {
 
     @RequestMapping(value = "/")
     public String index(){

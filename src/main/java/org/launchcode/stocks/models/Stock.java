@@ -1,4 +1,4 @@
-package net.cs50.finance.models;
+package org.launchcode.stocks.models;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;

@@ -1,4 +1,4 @@
-package net.cs50.finance;
+package org.launchcode.stocks;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

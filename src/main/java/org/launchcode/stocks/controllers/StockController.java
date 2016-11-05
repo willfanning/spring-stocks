@@ -1,6 +1,6 @@
-package net.cs50.finance.controllers;
+package org.launchcode.stocks.controllers;
 
-import net.cs50.finance.models.dao.StockHoldingDao;
+import org.launchcode.stocks.models.dao.StockHoldingDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Chris Bay on 5/17/15.
  */
 @Controller
-public class StockController extends AbstractFinanceController {
+public class StockController extends AbstractController {
 
     @Autowired
     StockHoldingDao stockHoldingDao;

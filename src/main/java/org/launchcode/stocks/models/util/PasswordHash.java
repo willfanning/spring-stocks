@@ -1,4 +1,4 @@
-package net.cs50.finance.models.util;
+package org.launchcode.stocks.models.util;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
