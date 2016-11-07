@@ -1,6 +1,6 @@
-package net.cs50.finance.models.dao;
+package org.launchcode.stocks.models.dao;
 
-import net.cs50.finance.models.User;
+import org.launchcode.stocks.models.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

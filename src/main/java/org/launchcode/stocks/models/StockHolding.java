@@ -1,8 +1,8 @@
-package net.cs50.finance.models;
+package org.launchcode.stocks.models;
 
-import net.cs50.finance.models.dao.StockHoldingDao;
-import net.cs50.finance.models.dao.StockTransactionDao;
-import net.cs50.finance.models.dao.UserDao;
+import org.launchcode.stocks.models.dao.StockHoldingDao;
+import org.launchcode.stocks.models.dao.StockTransactionDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
@@ -152,6 +152,8 @@ public class StockHolding extends AbstractEntity {
         // Conduct buy
         StockHolding holding = userPortfolio.get(symbol);
         holding.buyShares(numberOfShares);
+        
+       // TODO - update user cash on buy
 
         // update user cash
         user.setCash(user.getCash() - stock.getPrice() * numberOfShares);

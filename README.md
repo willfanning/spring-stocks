@@ -1,9 +1,5 @@
-# C$50 Finance (Java Edition)
-A Java (Spring Boot) implementation of the C$50 Finance problem set from cs50x
-
-
-## Introduction
-You've mastered C and learned the basics of Java. Now it's time to apply that knowledge in a modern application environment. We'll learn Spring MVC (via Spring Boot) and Hibernate annotations (for storing objects in a database), while re-implementing our old friend, C$50 Finance.
+# Spring Stocks
+A Java (Spring Boot) implementation of an application to simulate stock purchasing and selling.
 
 ## Getting ready
 We need to prep our environment before diving into the code.

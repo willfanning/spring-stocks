@@ -1,4 +1,4 @@
-package net.cs50.finance.models;
+package org.launchcode.stocks.models;
 
 /**
  * Created by Chris Bay on 5/17/15.

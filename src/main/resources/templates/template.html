@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html xmlns:th="http://www.thymeleaf.org/">
 <head lang="en" th:fragment="head">
     <meta charset="UTF-8" />
-    <title th:text="*{title}?: 'C$50 Finance'"></title>
+    <title th:text="*{title}?: 'Spring Stocks'"></title>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
     <link th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet" />
@@ -21,7 +21,7 @@
     <div class="container">
 
         <div id="top" th:fragment="masthead">
-            <a href="/" style="display:block;"><img alt="C$50 Finance" src="/img/logo.gif"/></a>
+            <a href="/" style="display:block;"><img alt="Spring Stocks" src="/img/logo.png"/></a>
             <ul class="nav nav-pills" style="margin:5px auto 20px;display:inline-block;">
                 <li><a href="/portfolio">Portfolio</a></li>
                 <li><a href="/quote">Quote</a></li>
@@ -36,7 +36,6 @@
 
         <div id="bottom" th:fragment="footer">
             <p><a href="/logout">Log Out</a></p>
-            <p>Copyright &#169; John Harvard</p>
         </div>
 
     </div>

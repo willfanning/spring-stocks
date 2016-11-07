@@ -1,4 +1,4 @@
-package net.cs50.finance.controllers;
+package org.launchcode.stocks.controllers;
 
 import net.cs50.finance.models.Stock;
 import net.cs50.finance.models.StockHolding;
@@ -17,7 +17,7 @@ import java.util.HashMap;
  * Created by Chris Bay on 5/17/15.
  */
 @Controller
-public class PortfolioController extends AbstractFinanceController {
+public class PortfolioController extends AbstractController {
 
     @RequestMapping(value = "/portfolio")
     public String portfolio(HttpServletRequest request, Model model){

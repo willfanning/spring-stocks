@@ -1,20 +1,23 @@
-package net.cs50.finance.controllers;
+package org.launchcode.stocks.controllers;
 
-import net.cs50.finance.models.*;
-import net.cs50.finance.models.dao.StockHoldingDao;
+import javax.servlet.http.HttpServletRequest;
+
+import org.launchcode.stocks.models.Stock;
+import org.launchcode.stocks.models.StockHolding;
+import org.launchcode.stocks.models.StockLookupException;
+import org.launchcode.stocks.models.User;
+import org.launchcode.stocks.models.dao.StockHoldingDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Created by Chris Bay on 5/17/15.
  */
 @Controller
-public class StockController extends AbstractFinanceController {
+public class StockController extends AbstractController {
 
     @Autowired
     StockHoldingDao stockHoldingDao;

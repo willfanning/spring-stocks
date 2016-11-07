@@ -1,6 +1,6 @@
-package net.cs50.finance.models;
+package org.launchcode.stocks.models;
 
-import net.cs50.finance.models.util.PasswordHash;
+import org.launchcode.stocks.models.util.PasswordHash;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;

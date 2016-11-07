@@ -1,8 +1,8 @@
-package net.cs50.finance;
+package org.launchcode.stocks;
 
-import net.cs50.finance.controllers.AbstractFinanceController;
-import net.cs50.finance.models.User;
-import net.cs50.finance.models.dao.UserDao;
+import org.launchcode.stocks.controllers.AbstractController;
+import org.launchcode.stocks.models.User;
+import org.launchcode.stocks.models.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -28,7 +28,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         // Require sign-in for all but auth pages
         if ( !authPages.contains(request.getRequestURI()) ) {
 
-            Integer userId = (Integer) request.getSession().getAttribute(AbstractFinanceController.userSessionKey);
+            Integer userId = (Integer) request.getSession().getAttribute(AbstractController.userSessionKey);
 
             if (userId == null) {
                 response.sendRedirect("/login");

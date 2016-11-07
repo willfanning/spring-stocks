@@ -1,4 +1,4 @@
-package net.cs50.finance.models;
+package org.launchcode.stocks.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
