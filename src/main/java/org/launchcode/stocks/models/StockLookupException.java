@@ -3,6 +3,7 @@ package org.launchcode.stocks.models;
 /**
  * Created by Chris Bay on 5/17/15.
  */
+@SuppressWarnings("serial")
 public class StockLookupException extends Exception {
 
     private String symbol;

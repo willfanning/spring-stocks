@@ -1,12 +1,17 @@
 package org.launchcode.stocks.models;
 
-import org.launchcode.stocks.models.util.PasswordHash;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.launchcode.stocks.models.util.PasswordHash;
 
 /**
  * Created by cbay on 5/10/15.
@@ -64,7 +69,8 @@ public class User extends AbstractEntity {
         return portfolio;
     }
 
-    private void setPortfolio(Map<String, StockHolding> portfolio) {
+    @SuppressWarnings("unused")
+	private void setPortfolio(Map<String, StockHolding> portfolio) {
         this.portfolio = portfolio;
     }
 
