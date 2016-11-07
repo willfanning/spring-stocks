@@ -1,17 +1,18 @@
 package org.launchcode.stocks.controllers;
 
-import net.cs50.finance.models.Stock;
-import net.cs50.finance.models.StockHolding;
-import net.cs50.finance.models.StockLookupException;
-import net.cs50.finance.models.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.launchcode.stocks.models.Stock;
+import org.launchcode.stocks.models.StockHolding;
+import org.launchcode.stocks.models.StockLookupException;
+import org.launchcode.stocks.models.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Created by Chris Bay on 5/17/15.
