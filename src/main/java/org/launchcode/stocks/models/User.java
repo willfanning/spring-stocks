@@ -40,7 +40,7 @@ public class User extends AbstractEntity {
     public User() {}
 
     @NotNull
-    @Column(name = "username", unique = true, nullable = false)
+    @Column(name = "username", unique = true)
     public String getUserName() {
         return userName;
     }
@@ -65,7 +65,8 @@ public class User extends AbstractEntity {
         return portfolio;
     }
 
-    private void setPortfolio(Map<String, StockHolding> portfolio) {
+    @SuppressWarnings("unused")
+	private void setPortfolio(Map<String, StockHolding> portfolio) {
         this.portfolio = portfolio;
     }
 

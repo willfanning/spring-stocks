@@ -1,16 +1,15 @@
 package org.launchcode.stocks.models;
 
-import org.launchcode.stocks.models.dao.StockHoldingDao;
-import org.launchcode.stocks.models.dao.StockTransactionDao;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by cbay on 5/10/15.
@@ -63,7 +62,7 @@ public class StockHolding extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "shares_owned", nullable = false)
+    @Column(name = "shares_owned")
     public int getSharesOwned() {
         return sharesOwned;
     }
@@ -72,7 +71,7 @@ public class StockHolding extends AbstractEntity {
         this.sharesOwned = sharesOwned;
     }
 
-    @OneToMany(mappedBy = "stockHolding", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "stockHolding", cascade = CascadeType.ALL)
     public List<StockTransaction> getTransactions() {
         return transactions;
     }
