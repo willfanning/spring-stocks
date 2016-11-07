@@ -58,7 +58,7 @@ public class StockTransaction extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "shares", nullable = false)
+    @Column(name = "shares")
     public int getShares() {
         return shares;
     }
@@ -68,7 +68,7 @@ public class StockTransaction extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     public float getPrice() {
         return price;
     }
@@ -78,7 +78,7 @@ public class StockTransaction extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "transaction_time", nullable = false)
+    @Column(name = "transaction_time")
     public Date getTransationTime() {
         return transactionTime;
     }
@@ -88,7 +88,7 @@ public class StockTransaction extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "symbol", nullable = false)
+    @Column(name = "symbol")
     public String getSymbol() {
         return symbol;
     }
@@ -98,7 +98,7 @@ public class StockTransaction extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     public int getUserId() {
         return userId;
     }
@@ -108,7 +108,7 @@ public class StockTransaction extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "type", nullable = false)
+    @Column(name = "type")
     public TransactionType getType() {
         return this.type;
     }

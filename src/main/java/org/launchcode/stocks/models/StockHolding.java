@@ -44,7 +44,7 @@ public class StockHolding extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "owner_id", nullable = false)
+    @Column(name = "owner_id")
     public int getOwnerId(){
         return ownerId;
     }
@@ -54,7 +54,7 @@ public class StockHolding extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "symbol", nullable = false)
+    @Column(name = "symbol")
     public String getSymbol() {
         return symbol;
     }
@@ -64,7 +64,7 @@ public class StockHolding extends AbstractEntity {
     }
 
     @NotNull
-    @Column(name = "shares_owned", nullable = false)
+    @Column(name = "shares_owned")
     public int getSharesOwned() {
         return sharesOwned;
     }

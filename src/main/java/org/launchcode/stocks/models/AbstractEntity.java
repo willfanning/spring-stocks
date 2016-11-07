@@ -17,7 +17,7 @@ public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "uid", unique = true, nullable = false)
+    @Column(name = "uid", unique = true)
     public int getUid() {
         return uid;
     }

@@ -40,11 +40,11 @@ public class User extends AbstractEntity {
         this.portfolio = new HashMap<String, StockHolding>();
     }
 
-    // empty constructor so Spring can do its magic
+    // empty constructor so Hibernate can do its magic
     public User() {}
 
     @NotNull
-    @Column(name = "username", unique = true, nullable = false)
+    @Column(name = "username", unique = true)
     public String getUserName() {
         return userName;
     }
@@ -63,7 +63,7 @@ public class User extends AbstractEntity {
         this.hash = hash;
     }
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
     public Map<String, StockHolding> getPortfolio() {
         return portfolio;
