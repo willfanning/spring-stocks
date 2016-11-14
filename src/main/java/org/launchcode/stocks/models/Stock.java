@@ -23,7 +23,7 @@ public class Stock {
     private final String name;
 
     private Stock(String symbol, String name, float price) {
-        this.symbol = symbol;
+        this.symbol = symbol.toUpperCase();
         this.price = price;
         this.name = name;
     }
@@ -55,6 +55,8 @@ public class Stock {
      * @return          Stock instance with current price information, if available, null otherwise
      */
     public static Stock lookupStock(String symbol) throws StockLookupException {
+    	
+    	if (symbol.isEmpty()) throw new StockLookupException("No symbol entered", "N/A");
 
         // Assemble the URL to query from Yahoo Finance
         URL url;

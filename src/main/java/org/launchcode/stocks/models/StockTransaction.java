@@ -47,6 +47,9 @@ public class StockTransaction extends AbstractEntity {
         this.userId = stockHolding.getOwnerId();
         this.price = Stock.lookupStock(symbol).getPrice();
     }
+    
+    // default constructor to make Hibernate happy
+    public StockTransaction() {} ;
 
     @ManyToOne
     public StockHolding getStockHolding() {

@@ -12,6 +12,7 @@ public class StockLookupException extends Exception {
 
     public StockLookupException(String message, String symbol) {
         super(message);
+        this.symbol = symbol;
     }
 
     public StockLookupException(String message, Throwable cause) {
@@ -20,7 +21,7 @@ public class StockLookupException extends Exception {
 
     @Override
     public String getMessage() {
-        return super.getMessage() + "Unable to lookup data for stock: " + symbol;
+        return super.getMessage() + ". Unable to lookup data for stock: " + symbol;
     }
 
     public String getSymbol() {

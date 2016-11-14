@@ -1,5 +1,10 @@
 package org.launchcode.stocks.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.launchcode.stocks.models.Stock;
+import org.launchcode.stocks.models.StockHolding;
+import org.launchcode.stocks.models.StockLookupException;
 import org.launchcode.stocks.models.dao.StockHoldingDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,77 +12,104 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Created by Chris Bay on 5/17/15.
  */
 @Controller
 public class StockController extends AbstractController {
 
-    @Autowired
-    StockHoldingDao stockHoldingDao;
+	@Autowired
+	StockHoldingDao stockHoldingDao;
 
-    @RequestMapping(value = "/quote", method = RequestMethod.GET)
-    public String quoteForm(Model model) {
+	@RequestMapping(value = "/quote", method = RequestMethod.GET)
+	public String quoteForm(Model model) {
 
-        // pass data to template
-        model.addAttribute("title", "Quote");
-        model.addAttribute("quoteNavClass", "active");
-        return "quote_form";
-    }
+		// pass data to template
+		model.addAttribute("title", "Quote");
+		model.addAttribute("quoteNavClass", "active");
+		return "quote_form";
+	}
 
-    @RequestMapping(value = "/quote", method = RequestMethod.POST)
-    public String quote(String symbol, Model model) {
+	@RequestMapping(value = "/quote", method = RequestMethod.POST)
+	public String quote(String symbol, Model model) {
 
-        // TODO - Implement quote lookup
+		try {
+			Stock s = Stock.lookupStock(symbol);
+			model.addAttribute("stock_desc", s.toString());
+			model.addAttribute("stock_price", s.getPrice());
 
-        // pass data to template
-        model.addAttribute("title", "Quote");
-        model.addAttribute("quoteNavClass", "active");
+		} catch (StockLookupException e) {
+			e.printStackTrace();
+			return displayError(e.getMessage(), model);
+		}
+		model.addAttribute("title", "Quote");
+		model.addAttribute("quoteNavClass", "active");
 
-        return "quote_display";
-    }
+		return "quote_display";
+	}
 
-    @RequestMapping(value = "/buy", method = RequestMethod.GET)
-    public String buyForm(Model model) {
+	@RequestMapping(value = "/buy", method = RequestMethod.GET)
+	public String buyForm(Model model) {
 
-        model.addAttribute("title", "Buy");
-        model.addAttribute("action", "/buy");
-        model.addAttribute("buyNavClass", "active");
-        return "transaction_form";
-    }
+		model.addAttribute("title", "Buy");
+		model.addAttribute("action", "/buy");
+		model.addAttribute("buyNavClass", "active");
+		return "transaction_form";
+	}
 
-    @RequestMapping(value = "/buy", method = RequestMethod.POST)
-    public String buy(String symbol, int numberOfShares, HttpServletRequest request, Model model) {
+	@RequestMapping(value = "/buy", method = RequestMethod.POST)
+	public String buy(String symbol, int numberOfShares, HttpServletRequest request, Model model) {
 
-        // TODO - Implement buy action
+		// TODO - Implement buy action
+		symbol = symbol.toUpperCase();
+		StockHolding holding;
+		Float price;
+		
+		try {
+			holding = StockHolding.buyShares(getUserFromSession(request), symbol, numberOfShares);
+			price = Stock.lookupStock(symbol).getPrice();
 
-        model.addAttribute("title", "Buy");
-        model.addAttribute("action", "/buy");
-        model.addAttribute("buyNavClass", "active");
+		} catch (StockLookupException e) {
+			e.printStackTrace();
+			return displayError(e.getMessage(), model);
 
-        return "transaction_confirm";
-    }
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return displayError(e.getMessage(), model);
+		}
 
-    @RequestMapping(value = "/sell", method = RequestMethod.GET)
-    public String sellForm(Model model) {
-        model.addAttribute("title", "Sell");
-        model.addAttribute("action", "/sell");
-        model.addAttribute("sellNavClass", "active");
-        return "transaction_form";
-    }
+		stockHoldingDao.save(holding);
+		
+		String confirmMessage = String.format("Transaction Complete. Purchased " + numberOfShares + 
+				" share(s) of " + symbol + " at " + price + " per share");
+		
+		// TODO Replace message
+		model.addAttribute("confirmMessage", confirmMessage);
+		model.addAttribute("title", "Buy");
+		model.addAttribute("action", "/buy");
+		model.addAttribute("buyNavClass", "active");
 
-    @RequestMapping(value = "/sell", method = RequestMethod.POST)
-    public String sell(String symbol, int numberOfShares, HttpServletRequest request, Model model) {
+		return "transaction_confirm";
+	}
 
-        // TODO - Implement sell action
+	@RequestMapping(value = "/sell", method = RequestMethod.GET)
+	public String sellForm(Model model) {
+		model.addAttribute("title", "Sell");
+		model.addAttribute("action", "/sell");
+		model.addAttribute("sellNavClass", "active");
+		return "transaction_form";
+	}
 
-        model.addAttribute("title", "Sell");
-        model.addAttribute("action", "/sell");
-        model.addAttribute("sellNavClass", "active");
+	@RequestMapping(value = "/sell", method = RequestMethod.POST)
+	public String sell(String symbol, int numberOfShares, HttpServletRequest request, Model model) {
 
-        return "transaction_confirm";
-    }
+		// TODO - Implement sell action
+
+		model.addAttribute("title", "Sell");
+		model.addAttribute("action", "/sell");
+		model.addAttribute("sellNavClass", "active");
+
+		return "transaction_confirm";
+	}
 
 }
