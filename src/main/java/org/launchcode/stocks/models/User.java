@@ -26,6 +26,7 @@ public class User extends AbstractEntity {
 
     private String userName;
     private String hash;
+    private Float cash;
 
     /**
      * A collection of all the StockHoldings this user owns. The keys are stock symbols, ie "YHOO"
@@ -37,6 +38,7 @@ public class User extends AbstractEntity {
     public User(String userName, String password) {
         this.hash = PasswordHash.getHash(password);
         this.userName = userName;
+        this.cash = (float)1000000;
         this.portfolio = new HashMap<String, StockHolding>();
     }
 
@@ -44,6 +46,16 @@ public class User extends AbstractEntity {
     public User() {}
 
     @NotNull
+    @Column(name = "cash")
+    public Float getCash() {
+		return cash;
+	}
+
+	public void setCash(Float cash) {
+		this.cash = cash;
+	}
+
+	@NotNull
     @Column(name = "username", unique = true)
     public String getUserName() {
         return userName;

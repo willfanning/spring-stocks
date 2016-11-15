@@ -12,6 +12,21 @@
 
         <!-- TODO - Display portfolio -->
         <p>Portfolio!</p>
+        <table style="width: 100%">
+        	<tr>
+        		<th>Name</th>
+        		<th>Shares</th>
+        		<th>Price($)</th>
+        		<th>Value($)</th>
+        	</tr>
+       		<tr th:each="stock : ${stocks}">
+       			<td th:text="${stock.value[0]}">name</td>
+       			<td th:text="${stock.value[1]}">shares</td>
+       			<td th:text="${stock.value[2]}">price</td>
+       			<td th:text="${stock.value[3]}">value</td>
+       		</tr>
+        	
+        </table>
 
     </div>
 
